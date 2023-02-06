@@ -1,0 +1,28 @@
+- name: Upgrade Fortigate Router
+  hosts: fortigate_group
+  gather_facts: no
+  vars:
+    ftp_server: ftp.example.com
+    ftp_username: ftpuser
+    ftp_password: ftppassword
+    firmware_image: fortios.out
+
+  tasks:
+  - name: Copy firmware image to router
+    copy:
+      src: "{{ firmware_image }}"
+      dest: /tmp/
+      remote_src: yes
+      validate: "sha256sum {{ firmware_image }}"
+
+  - name: Upgrade Firmware
+    fortios_system_software:
+      src: "/tmp/{{ firmware_image }}"
+      upgrade: yes
+      reboot: yes
+
+  - name: Wait for router to come back online
+    wait_for:
+      host: "{{ inventory_hostname }}"
+      port: 22
+      timeout: 600
