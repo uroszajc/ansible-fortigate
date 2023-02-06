@@ -8,6 +8,17 @@
     firmware_image: fortios.out
 
   tasks:
+  - name: Check free disk space
+    fortios_system_info:
+      gather_subset: hardware
+
+    register: disk_info
+
+  - name: Abort if not enough free disk space
+    fail:
+      msg: "Not enough free disk space on {{ inventory_hostname }}"
+    when: disk_info.ansible_facts.hardware.memory.free_memory < 104857600
+
   - name: Copy firmware image to router
     copy:
       src: "{{ firmware_image }}"
