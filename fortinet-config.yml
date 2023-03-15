@@ -1,0 +1,23 @@
+- name: Export FortiGate configuration to registry
+  hosts: fortigate
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Retrieve FortiGate configuration
+      fortios_system_api:
+        path: /system/config/backup
+        method: GET
+        filters:
+          - format: json
+      register: fortigate_config
+
+    - name: Save FortiGate configuration to registry
+      registry:
+        state: present
+        key: fortigate_config
+        value: "{{ fortigate_config.json }}"
+        
+- name: Print FortiGate configuration from registry
+  debug:
+    var: lookup('registry', 'fortigate_config')
