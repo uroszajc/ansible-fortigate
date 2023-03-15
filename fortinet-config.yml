@@ -1,8 +1,6 @@
 - name: Export FortiGate configuration to registry
   hosts: all
   gather_facts: no
-  connection: network_cli
-
   tasks:
   - name: Retrieve FortiGate configuration
     fortios_system_api:
