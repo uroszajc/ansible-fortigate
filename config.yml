@@ -15,12 +15,12 @@
           '.* # ': '\r'
       register: fortigate_config
 
-    - name: Save Fortigate configuration to file
-      copy:
-        content: "{{ fortigate_config.stdout }}"
-        dest: "/path/to/config/files/{{ config_file }}"
-      register: copy_result
+#    - name: Save Fortigate configuration to file
+#      copy:
+#        content: "{{ fortigate_config.stdout }}"
+#        dest: "/path/to/config/files/{{ config_file }}"
+#      register: copy_result
 
-    - name: Print copy result
+    - name: Print config
       debug:
-        var: copy_result
+        var: fortigate_config
