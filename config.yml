@@ -1,8 +1,8 @@
 ---
 - name: Dump Fortigate configuration
   hosts: all
-  gather_facts: no
 
+  gather_facts: no
   vars:
     config_file: "{{ inventory_hostname }}_config_{{ ansible_date_time.date }}"
 
