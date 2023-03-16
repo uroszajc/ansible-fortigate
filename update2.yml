@@ -1,0 +1,9 @@
+---
+- name: Backup running config
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Backup current config
+      fortios_config:
+      backup: yes
