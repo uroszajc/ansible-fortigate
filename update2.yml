@@ -5,5 +5,5 @@
 
   tasks:
     - name: Backup current config
-      fortios_config:
+      fortiosconfig:
         backup: yes
