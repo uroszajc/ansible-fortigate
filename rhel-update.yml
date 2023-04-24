@@ -1,6 +1,5 @@
 - name: update and Upgrade
   hosts: all
-  become: yes
   tasks:
   - name: RHEL-Type updates
     block: 
@@ -13,6 +12,7 @@
         ansible.builtin.yum:
           name: "*"
           state: latest
+        become: yes
 
       - name: check if reboot required
         become: yes
@@ -26,6 +26,7 @@
 
        #add some check for reboot stuff 
       - name: Reboot if updates require it
+        become: yes
         ansible.builtin.reboot:
           reboot_timeout: 3600
         when: reboot_needed.stdout.find('Reboot is required') != -1
