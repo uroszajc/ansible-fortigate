@@ -4,10 +4,10 @@
   - name: RHEL-Type updates
     block: 
       - name: ensure yum-utils are installed
-        become: yes
         ansible.builtin.dnf:
          name: yum-utils
          state: present
+        become: yes
 
       - name: Upgrade all packages
         ansible.builtin.yum:
