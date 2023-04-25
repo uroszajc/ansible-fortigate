@@ -1,5 +1,7 @@
+---
 - hosts: fortigates
   connection: httpapi
+  hosts: all
   collections:
     - fortinet.fortios
   vars:
