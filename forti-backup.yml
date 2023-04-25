@@ -1,5 +1,4 @@
 ---
-- hosts: fortigates
   connection: httpapi
   hosts: all
   collections:
@@ -11,7 +10,8 @@
     ansible_httpapi_port: 443
   tasks:
   - name: backup a_specific_vdom settings
-    fortinet.fortios.fortios_system_config_backup_restore:
+#    fortinet.fortios.fortios_system_config_backup_restore:
+    fortios_system_config_backup_restore:
      config: "system config backup"
      vdom: "{{ vdom }}"
      backup: "yes"
@@ -19,7 +19,8 @@
      filename: "/tmp/backup_vdom"
 
   - name: backup global settings
-    fortinet.fortios.fortios_system_config_backup_restore:
+#    fortinet.fortios.fortios_system_config_backup_restore:
+    fortios_system_config_backup_restore:
      config: "system config backup"
      vdom: "{{ vdom }}"
      backup: "yes"
