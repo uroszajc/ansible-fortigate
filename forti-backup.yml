@@ -2,7 +2,7 @@
 - name: Fortinetstuff 
   hosts: all
   gather_facts: no
-  connection: local
+#  connection: local
   collections:
     - fortinet.fortios
   vars:
