@@ -19,4 +19,3 @@
       params:
        scope: 'global'
     register: backupinfo
-#    delegate_to: 127.0.0.1
