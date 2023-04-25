@@ -10,6 +10,7 @@
     ansible_httpapi_use_ssl: yes
     ansible_httpapi_validate_certs: no
     ansible_httpapi_port: 443
+
   tasks:
   - name: Backup a virtual domain.
     fortios_monitor_fact:
@@ -18,4 +19,4 @@
       params:
        scope: 'global'
     register: backupinfo
-
+    delegate_to: 127.0.0.1
