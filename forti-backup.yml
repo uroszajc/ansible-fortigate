@@ -1,7 +1,6 @@
 ---
 - name: Fortinetstuff 
   hosts: all
-  connection: httpapi
   collections:
     - fortinet.fortios
   vars:
