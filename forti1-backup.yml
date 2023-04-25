@@ -1,0 +1,33 @@
+- hosts: localhost
+  connection: httpapi
+  collections:
+    - fortinet.fortios
+  vars:
+    vdom: "root"
+    host: "192.168.122.60"
+    username: "admin"
+    password: ""
+  tasks:
+  - name: backup global or a_specific_vdom settings
+    fortios_system_config_backup_restore:
+     config: "system config backup"
+     host:  "{{ host }}"
+     username: "{{ username }}"
+     password: "{{ password }}"
+     vdom: "{{ vdom }}"
+     backup: "yes"
+     https: True
+     ssl_verify: False
+     scope: "global or vdom"
+     filename: "/tmp/backup_test"
+  - name: Restore global or a_specific_vdom settings
+    fortios_system_config_backup_restore:
+     config: "system config restore"
+     host:  "{{ host }}"
+     username: "{{ username }}"
+     password: "{{ password }}"
+     vdom:  "{{ vdom }}"
+     https: True
+     ssl_verify: False
+     scope: "global or vdom"
+     filename: "/tmp/backup_test"
