@@ -11,7 +11,7 @@
     ansible_httpapi_port: 443
   tasks:
   - name: backup a_specific_vdom settings
-    fortinet.fortios.fortios_system_config_backup_restore"
+    fortinet.fortios.fortios_system_config_backup_restore:
      config: "system config backup"
      vdom: "{{ vdom }}"
      backup: "yes"
@@ -19,7 +19,7 @@
      filename: "/tmp/backup_vdom"
 
   - name: backup global settings
-    fortios_system_config_backup_restore:
+    fortinet.fortios.fortios_system_config_backup_restore:
      config: "system config backup"
      vdom: "{{ vdom }}"
      backup: "yes"
