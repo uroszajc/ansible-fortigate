@@ -1,5 +1,6 @@
 ---
   hosts: all
+  connection: httpapi
   collections:
     - fortinet.fortios
   vars:
@@ -8,20 +9,11 @@
     ansible_httpapi_validate_certs: no
     ansible_httpapi_port: 443
   tasks:
-  - name: backup a_specific_vdom settings
-#    fortinet.fortios.fortios_system_config_backup_restore:
-    fortios_system_config_backup_restore:
-     config: "system config backup"
-     vdom: "{{ vdom }}"
-     backup: "yes"
-     scope: "vdom"
-     filename: "/tmp/backup_vdom"
+  - name: Backup a virtual domain.
+    fortios_monitor_fact:
+      selector: 'system_config_backup'
+      vdom: 'root'
+      params:
+       scope: 'global'
+    register: backupinfo
 
-  - name: backup global settings
-#    fortinet.fortios.fortios_system_config_backup_restore:
-    fortios_system_config_backup_restore:
-     config: "system config backup"
-     vdom: "{{ vdom }}"
-     backup: "yes"
-     scope: "global"
-     filename: "/tmp/backup_global"
