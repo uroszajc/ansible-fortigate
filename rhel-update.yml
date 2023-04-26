@@ -35,7 +35,8 @@
     when: ansible_distribution_file_path == "/etc/redhat-release"
 
     block:
-      - name: Ubuntu update stuff         apt:
+      - name: Ubuntu update stuff         
+        apt:
           update_cache: yes
           cache_valid_time: 3600
 
