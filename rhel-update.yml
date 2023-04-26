@@ -1,5 +1,7 @@
 - name: update and Upgrade
   hosts: all
+  become: yes
+
   tasks:
   - name: RHEL-Type updates
     block: 
