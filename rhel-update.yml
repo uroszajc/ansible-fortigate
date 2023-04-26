@@ -9,7 +9,7 @@
          name: yum-utils
          state: present
 
-      - name: Upgrade all packages
+      - name: Upgrade all RdHat packages
         ansible.builtin.yum:
           name: "*"
           state: latest
@@ -35,8 +35,7 @@
     when: ansible_distribution_file_path == "/etc/redhat-release"
 
     block:
-      - name: Ubuntu update stuff Stuff
-        apt:
+      - name: Ubuntu update stuff         apt:
           update_cache: yes
           cache_valid_time: 3600
 
