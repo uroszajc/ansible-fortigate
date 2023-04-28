@@ -1,6 +1,6 @@
 ---
 - name: Enable internet stuff
-#  hosts: all
+  hosts: all
 #  hosts: mikrotik
   tasks:
 #     - name: Collect all facts from the device
@@ -16,7 +16,6 @@
 #         var: ansible_facts
 
      - name: NxFilter container
-       hosts: rhel
        become: yes
        containers.podman.podman_container:
          name: nxfilter
@@ -34,7 +33,6 @@
        when: "'redhat' in inventory_hostname"
 
      - name: enable eth5 on mikrotik
-       hosts: mikrotik
        community.routeros.command:
          commands: /interface/ethernet/enable "ether5 - unify"
        when: "'router' in inventory_hostname"
