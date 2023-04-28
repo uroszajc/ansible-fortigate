@@ -30,9 +30,9 @@
            - "nxfilter-log:/nxfilter/log"
            - "nxfilter-db:/nxfilter/db"
          state: started
-       when: "'redhat' in inventory_hostname"
+       when: "'thel' in inventory_hostname"
 
      - name: enable eth5 on mikrotik
        community.routeros.command:
          commands: /interface/ethernet/enable "ether5 - unify"
-       when: "'router' in inventory_hostname"
+       when: "'mikrotik' in inventory_hostname"
