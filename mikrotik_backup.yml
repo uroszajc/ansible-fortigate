@@ -11,13 +11,6 @@
       register: export
       delegate_to: remote.zajc.net
 
-
-    - name: Creates directory if not exist yet
-      file:
-        path: "{{ backup_dir }}"
-        state: directory
-      delegate_to: remote.zajc.net
-
     - name: Backup
       ansible.builtin.copy:
         content: "{{ export.stdout }}"
