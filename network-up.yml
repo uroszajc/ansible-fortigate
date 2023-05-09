@@ -35,4 +35,4 @@
      - name: enable eth5 on mikrotik
        community.routeros.command:
          commands: /interface/ethernet/enable "ether5 - unify"
-       when: "'mikrotik' in inventory_hostname"
+       when: "'router' in inventory_hostname"
