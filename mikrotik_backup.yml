@@ -14,7 +14,7 @@
 
     - name: Creates directory if not exist yet
       file:
-        path: {{ backup_dir }}
+        path: "{{ backup_dir }}"
         state: directory
       delegate_to: localhost
 
