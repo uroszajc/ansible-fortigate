@@ -1,0 +1,26 @@
+---
+- name: Backup Mikrotik config
+  hosts: mikrotik
+  gather_facts: false
+  vars:
+    backup_dir: "/home/net_control/backup"
+  tasks:
+    - name: Export
+      ansible.builtin.shell: >-
+                sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ inventory_hostname }} /export
+      register: export
+      delegate_to: localhost
+
+
+    - name: Creates directory if not exist yet
+      file:
+        path: {{ backup_dir }}
+        state: directory
+      delegate_to: localhost
+
+    - name: Backup
+      ansible.builtin.copy:
+        content: "{{ export.stdout }}"
+        dest: "{{ backup_dir }}/{{ inventory_hostname }}_config.{{ lookup('pipe', 'date +%Y-%m-%d@%H:%M:%S') }}"
+      when: export is defined
+      delegate_to: localhost
