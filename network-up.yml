@@ -31,7 +31,7 @@
            - "nxfilter-log:/nxfilter/log"
            - "nxfilter-db:/nxfilter/db"
          state: started
-       when: "'rhel' in inventory_hostname"
+       when: "'re_hel' in inventory_hostname"
 
      - name: enable eth5 on mikrotik
        community.routeros.command:
