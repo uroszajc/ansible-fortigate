@@ -3,11 +3,11 @@
   hosts: mikrotik
   tasks:
   - name: Check Resources
-    community.network.routeros_command:
-      commands: /system resource print
-    register: routeros_resources
-    when: ansible_network_os == 'community.network.routeros'
+#    community.network.routeros_command:
+#      commands: /system resource print
+#    register: routeros_resources
+#    when: ansible_network_os == 'community.network.routeros'
   - name: print facts
     ansible.builtin.debug: 
       var: ansible_facts
-    when: routeros_resource is defined
+#    when: routeros_resource is defined
