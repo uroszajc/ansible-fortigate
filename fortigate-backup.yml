@@ -1,6 +1,6 @@
 ---
 - name: Backup fortgiate full-configuration
-  hosts: fortinet
+  hosts: fortigate
   gather_facts: false
   vars:
     backup_dir: "/home/net_control/backup"
