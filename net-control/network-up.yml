@@ -1,6 +1,6 @@
 ---
 - name: Enable internet stuff
-  hosts:mikrotik
+  hosts: mikrotik
   gather_facts: false
 
   tasks:
