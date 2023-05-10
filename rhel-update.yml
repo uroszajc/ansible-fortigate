@@ -1,5 +1,5 @@
 - name: update and Upgrade
-  hosts: all
+  hosts: servers
   become: yes
 
   tasks:
