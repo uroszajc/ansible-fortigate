@@ -1,0 +1,22 @@
+---
+- name: Enable internet stuff
+  hosts:rhel
+  gather_facts: false
+
+  tasks:
+     - name: NxFilter container
+       become: yes
+       containers.podman.podman_container:
+         name: nxfilter
+         image: packetworks/nxfilter-base:latest
+         restart_policy: always
+         publish: 
+           - "192.168.83.89:53:53/udp"
+           - "192.168.83.89:4439:443"
+           - "19002-19004:19002-19004"
+         volume:
+           - "nxfilter-conf:/nxfilter/conf"
+           - "nxfilter-log:/nxfilter/log"
+           - "nxfilter-db:/nxfilter/db"
+         state: started
+       when: "'re_hel' in inventory_hostname"
