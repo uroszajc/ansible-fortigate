@@ -7,7 +7,7 @@
   tasks:
     - name: Export
       ansible.builtin.shell: >-
-                sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ inventory_hostname }} /export
+                sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ inventory_hostname }} show full-configuration 
       register: export
       delegate_to: localhost
 
