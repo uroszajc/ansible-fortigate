@@ -10,4 +10,4 @@
   - name: print
     debug: 
       var: routeros_resource
-    when = routeros_resource is defined
+    when: routeros_resource is defined
