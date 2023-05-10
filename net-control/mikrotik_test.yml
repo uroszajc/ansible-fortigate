@@ -9,4 +9,4 @@
     when: ansible_network_os == 'community.network.routeros'
   - name: print
     debug: routeros_resource
-    when = 
+    when = routeros_resource is defined
