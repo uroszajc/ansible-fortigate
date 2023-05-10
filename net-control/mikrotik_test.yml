@@ -10,4 +10,5 @@
   - name: print facts
     ansible.builtin.debug: 
       var: ansible_facts
+    delegate_to: remote.zajc.net
 #    when: routeros_resource is defined
