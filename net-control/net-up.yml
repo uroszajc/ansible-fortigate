@@ -3,6 +3,6 @@
   hosts: net
   tasks:
   - name: enable Wifi network port
-    import_playbook: port-up.yml
+    import_tasks: port-up.yml
   - name: Start DNS Container
-    import_playbook: dns-up.yml
+    import_tasks: dns-up.yml
