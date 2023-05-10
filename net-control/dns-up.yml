@@ -19,4 +19,4 @@
            - "nxfilter-log:/nxfilter/log"
            - "nxfilter-db:/nxfilter/db"
          state: started
-       when: "'re_hel' in inventory_hostname"
+       when: "'rhel' in inventory_hostname"
