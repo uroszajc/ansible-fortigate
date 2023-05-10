@@ -2,7 +2,6 @@
 - name: Enable internet stuff
   hosts: mikrotik
   gather_facts: false
-
   tasks:
   - name: enable eth5 on mikrotik
     community.routeros.command:
