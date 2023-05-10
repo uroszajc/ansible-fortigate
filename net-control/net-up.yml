@@ -1,5 +1,6 @@
 ---
 - name: Enable network settings
+  hosts: net
   tasks:
   - name: enable Wifi network port
     import_playbook: port-up.yml
