@@ -8,5 +8,6 @@
     register: routeros_resources
     when: ansible_network_os == 'community.network.routeros'
   - name: print
-    debug: routeros_resource
+    debug: 
+      var: routeros_resource
     when = routeros_resource is defined
