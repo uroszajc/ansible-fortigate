@@ -6,4 +6,4 @@
     - name: enable eth5 on mikrotik
       community.routeros.command:
         commands: /interface/ethernet/enable "ether5 - unify"
-      delegate_to: lolcahost
+      delegate_to: localhost
