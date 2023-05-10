@@ -1,5 +1,9 @@
+---
+- name: Enable internet stuff
+  hosts:mikrotik
+  gather_facts: false
 
-     - name: enable eth5 on mikrotik
-       community.routeros.command:
-         commands: /interface/ethernet/enable "ether5 - unify"
-       when: "'router' in inventory_hostname"
+  tasks:
+  - name: enable eth5 on mikrotik
+    community.routeros.command:
+      commands: /interface/ethernet/enable "ether5 - unify"
