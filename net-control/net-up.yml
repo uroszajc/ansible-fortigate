@@ -1,0 +1,7 @@
+---
+- name: Enable network settings
+  tasks:
+  - name: enable Wifi network port
+    import_playbook: network-up.yml
+  - name: Start DNS Container
+    import_playbook: dns-up.yml
