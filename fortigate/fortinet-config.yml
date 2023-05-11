@@ -18,7 +18,7 @@
       
   - name: get all
     fortinet.fortios.fortios_configuration_fact:
-      vdom: ""
+      vdom: "jQbh0j5Nbdyn3Q675G7g5pzjN5709h"
       access_token: ""
       selector: log_custom-field
       
