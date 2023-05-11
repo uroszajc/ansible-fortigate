@@ -19,7 +19,7 @@
   - name: get all
     fortinet.fortios.fortios_configuration_fact:
       vdom: "root"
-      access_token: "jQbh0j5Nbdyn3Q675G7g5pzjN5709h"
+      access_token: "{{ fortios_access_token }}"
       selector: log_custom-field
       
   - name: Show config
