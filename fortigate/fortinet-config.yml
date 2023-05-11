@@ -16,10 +16,10 @@
       output: yaml
       register: forticonfig
       
-    - name: Show config
-      debug:
-        var: forticonfig
-      when: forticonfig is defined
+  - name: Show config
+    debug:
+      var: forticonfig
+    when: forticonfig is defined
 
 #   handlers:
 #   - name: Save Fortinet Fortigate configuration
