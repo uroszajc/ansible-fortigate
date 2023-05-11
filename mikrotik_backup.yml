@@ -13,7 +13,7 @@
       
     - name: Create a directory if it does not exist
       ansible.builtin.file:
-        path: {{ backup_dir }}/{{ inventory_hostname }} 
+        path: "{{ backup_dir }}/{{ inventory_hostname }}" 
         state: directory
         mode: '0755'
       delegate_to: localhost
