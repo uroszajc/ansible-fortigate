@@ -17,7 +17,7 @@
 #       register: forticonfig
       
   - name: get all
-    fortios_configuration_fact:
+    fortinet.fortios.fortios_configuration_fact:
       vdom: ""
       access_token: ""
       selector: log_custom-field
