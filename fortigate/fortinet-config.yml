@@ -7,14 +7,20 @@
 #    ansible_user: fortiuser
 #    ansible_password: fortipass
   tasks:
-  - name: Collect Fortinet Fortigate configuration
+#   - name: Collect Fortinet Fortigate configuration
+#     fortios_configuration_fact:
+#       host: "{{ ansible_host }}"
+#       user: "{{ ansible_user }}"
+#       password: "{{ ansible_password }}"
+#       validate_certs: no
+#       output: yaml
+#       register: forticonfig
+      
+  - name: get all
     fortios_configuration_fact:
-      host: "{{ ansible_host }}"
-      user: "{{ ansible_user }}"
-      password: "{{ ansible_password }}"
-      validate_certs: no
-      output: yaml
-      register: forticonfig
+      vdom: ""
+      access_token: ""
+      selector: log_custom-field
       
   - name: Show config
     debug:
