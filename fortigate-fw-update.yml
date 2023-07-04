@@ -17,7 +17,7 @@
   - name: Abort if not enough free disk space
     fail:
       msg: "Not enough free disk space on {{ inventory_hostname }}"
-    when: disk_info.ansible_facts.hardware.memory.free_memory < 104857600
+    when: disk_info.ansible_facts.hardware.memory.free_memory < 104857600 #lets work on this - is free_memory or free disk?
 
   - name: Copy firmware image to router
     copy:
