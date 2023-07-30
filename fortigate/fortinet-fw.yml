@@ -1,6 +1,5 @@
 ---
-- name: Update FortiGate firmware using sshpass
-  hosts: fortigate
+- hosts: fortigate
   vars:
     vdom: "root"
     ssl_verify: "False"
