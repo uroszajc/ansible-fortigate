@@ -9,7 +9,7 @@
       ansible.builtin.shell: >-
                 sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ ansible_host }} /export
       register: export
-      delegate_to: remote.zajc.net
+      delegate_to: 192.168.83.89
       
     - name: Create a directory if it does not exist
       ansible.builtin.file:
