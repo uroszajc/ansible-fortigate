@@ -5,10 +5,12 @@
     ssl_verify: "False"
   tasks:
   - name: Check firmware version
-    command: "sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ inventory_hostname }} fwctl -c get sys firmware"
-    register: firmware_info
+    command: "sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ inventory_hostname }} get system status"
+    register: system_info
     delegate_to: localhost
-
+  - name: Extract firmware version
+    set_fact:
+      firmware_info: "{{ system_info.stdout | regex_search('Version: (.*)') }}"
   - name: Debug firmware_info
     debug:
       var: firmware_info
