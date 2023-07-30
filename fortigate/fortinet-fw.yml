@@ -7,6 +7,8 @@
   - name: Check firmware version
     command: "sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ inventory_hostname }} fwctl -c get sys firmware"
     register: firmware_info
+    delegate_to: localhost
+
   - name: Debug firmware_info
     debug:
       var: firmware_info
