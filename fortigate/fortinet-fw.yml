@@ -5,7 +5,7 @@
     ssl_verify: "False"
   tasks:
   - name: Check firmware version
-    command: "sshpass -p '{{ password }}' fwctl -c get sys firmware"
+    command: "sshpass -p '{{ ansible_backup_password }}' fwctl -c get sys firmware"
     register: firmware_info
   - name: Debug firmware_info
     debug:
