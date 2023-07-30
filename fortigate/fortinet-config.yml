@@ -1,0 +1,26 @@
+---
+- hosts: fortigate
+  gather_facts: no
+  vars:
+    config_dir: "/home/net_control/config"
+  tasks:   
+  - name: get all
+    fortinet.fortios.fortios_configuration_fact:
+      vdom: "root"
+      access_token: "{{ fortios_access_token }}"
+      selector: log_custom-field
+    register: forticonfig
+      
+  - name: Show config
+    debug:
+      var: forticonfig
+    when: forticonfig is defined
+
+#   handlers:
+#   - name: Save Fortinet Fortigate configuration
+#     file:
+#       src: "{{config_dir }}/{{ ansible_host }}_config.yaml"
+#       dest: "/path/to/fortigate_config.yaml"
+#       owner: root
+#       group: root
+#       mode: 0644

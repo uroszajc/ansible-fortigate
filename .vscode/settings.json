@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible-lint-config.json": "file:///c%3A/Users/uros.zajc/OneDrive%20-%20Cirrus%20Networks/Apps/Fortinet/ansible-fortigate/tesy.yaml"
+    }
+}

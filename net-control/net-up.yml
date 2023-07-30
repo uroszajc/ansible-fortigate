@@ -1,0 +1,8 @@
+---
+- name: Enable network settings
+  hosts: net
+  tasks:
+  - name: enable Wifi network port
+    import_tasks: port-up.yml
+  - name: Start DNS Container
+    import_tasks: dns-up.yml
