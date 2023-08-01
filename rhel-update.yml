@@ -51,18 +51,18 @@
       - name: Remove dependencies that are no longer required - Second Run
         apt:
           autoremove: yes
-      block:  
-        - name: Check if a reboot is required
-          stat: path=/var/run/reboot-required get_md5=no
-          register: reboot_flag
+ 
+      - name: Check if a reboot is required
+        stat: path=/var/run/reboot-required get_md5=no
+        register: reboot_flag
 
-        - name: Reboot the server is needed
-          reboot:
-            reboot_timeout: 300
-         
-      when: reboot_flag.stat.exists == true
+      - name: Reboot the server is needed
+        reboot:
+          reboot_timeout: 300   
+        when: reboot_flag.stat.exists == true
 
       - debug:
           msg: "Server is back up and running"
+        when: reboot_flag.stat.exists == true
     when: ansible_facts['os_family'] == 'Debian'
 #    when: ansible_facts['distribution'] == 'Linux Mint'
