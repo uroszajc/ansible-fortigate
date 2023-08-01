@@ -3,6 +3,7 @@
   hosts: hp
 - tasks:
   - name: Start a VM
+    hosts: hp
     community.libvirt.virt:
      name: win10
      state: running
