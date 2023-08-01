@@ -63,5 +63,5 @@
 
       - debug:
           msg: "Server is back up and running"
-    when: ansible_facts['ansible_os_family'] == 'Debian'
+    when: ansible_facts['os_family'] == 'Debian'
 #    when: ansible_facts['distribution'] == 'Linux Mint'
