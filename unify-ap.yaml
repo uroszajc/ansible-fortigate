@@ -1,0 +1,10 @@
+---
+- name: Join AP to Controller
+  hosts: accesspoint
+  gather_facts: false
+  tasks:
+    - name: connect and run the command
+      ansible.builtin.shell: >-
+                sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} set-inform http://192.168.83.78:8080/inform
+      register: command
+      delegate_to: 192.168.83.89
