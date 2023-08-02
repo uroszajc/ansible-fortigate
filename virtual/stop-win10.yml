@@ -1,0 +1,8 @@
+---
+- name: start win10 VM
+  hosts: hp
+  tasks:
+  - name: Start a VM
+    community.libvirt.virt:
+     name: win10
+     state: shutdown
