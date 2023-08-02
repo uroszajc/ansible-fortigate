@@ -1,0 +1,18 @@
+---
+- name: start some containers
+  hosts: hp
+  tasks:
+  - name: Start Unifi container
+    community.docker.docker_container:
+     name: unifi-controller
+     state: started
+    
+  - name: Start heimdall container
+    community.docker.docker_container:
+     name: heimdall
+     state: started
+    
+  - name: Start watchtower container
+    community.docker.docker_container:
+     name: watchtower
+     state: started
