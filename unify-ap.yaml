@@ -4,7 +4,7 @@
   gather_facts: false
   tasks:
     - name: connect and run the command
-      ansible.builtin.raw: '/usr/bin/mca-cli-op set-inform http://192.168.83.78:8080/inform'
+      ansible.builtin.raw: '/usr/bin/mca-cli-op set-inform http://192.168.83.89:8080/inform'
       register: command_result
     - name: Debug result
       debug:
