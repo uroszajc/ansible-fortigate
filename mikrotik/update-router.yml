@@ -20,7 +20,7 @@
       ansible.builtin.debug: 
        var: pre_update_version
     
-    - block:
+      block:
       - name: Run backup first
         import_tasks: mikrotik_backup.yml
     
@@ -44,4 +44,4 @@
          body: Mikrotik has been updated from {{ pre_update_version }} to {{post_update_version }} , backed up and restarted!
         delegate_to: home-pc
         
-        when: '"New version is available" in update_check.stdout[0]'
+      when: '"New version is available" in update_check.stdout[0]'
