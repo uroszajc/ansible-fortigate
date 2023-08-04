@@ -16,7 +16,6 @@
        var: update_check
     
     - block:
-      
       - name: Run backup first
         import_tasks: mikrotik_backup.yml
     
@@ -24,6 +23,7 @@
         ansible.builtin.shell: >-
          sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/update/check-for-updates
         register: post_update_check
+        
       - name: email results
         mail:
          host: 192.168.83.3
@@ -41,4 +41,5 @@
 
           Cheers bud
         delegate_to: home-pc
+        
       when: '"New version is available" in update_check.stdout[0]'
