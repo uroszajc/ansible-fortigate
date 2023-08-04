@@ -1,6 +1,4 @@
 ---
-
-  tasks:
     - name: Export
       ansible.builtin.shell: >-
                 sshpass -p '{{ ansible_backup_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_backup_user }}@{{ ansible_host }} /export
