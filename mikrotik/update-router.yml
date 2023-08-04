@@ -9,7 +9,10 @@
       register: update_check
       delegate_to: 192.168.83.89
     - block:
-      - include: mikrotik_backup.yml
+      
+      - name: Run backup first
+        import_tasks: mikrotik_backup.yml
+    
       - name: Pretend to update
         ansible.builtin.shell: >-
          sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/update/check-for-updates
