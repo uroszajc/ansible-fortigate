@@ -1,5 +1,4 @@
 ---
-- name: Backup Mikrotik config
   hosts: mikrotik
   gather_facts: false
   vars:
