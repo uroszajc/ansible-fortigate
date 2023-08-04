@@ -11,7 +11,7 @@
          name: yum-utils
          state: present
 
-      - name: Upgrade all RdHat packages
+      - name: Upgrade all Red Hat packages
         ansible.builtin.yum:
           name: "*"
           state: latest
@@ -21,7 +21,7 @@
         become: yes
         ansible.builtin.command: "/usr/bin/dnf needs-restarting -r"
         register: reboot_needed
-        ignore_errors: True
+        ignore_errors: true
     
       - name: Update required status output
         debug:
@@ -32,8 +32,8 @@
         become: yes
         ansible.builtin.reboot:
           reboot_timeout: 3600
-        when: reboot_needed.stdout.find('Reboot is required') != -1
-        
+        when: reboot_needed is search('Reboot is required to fully utilize these updates.') != -1
+              
     when: ansible_distribution_file_path == "/etc/redhat-release"
   - name: Ubuntu Update - Stuff
     block:
@@ -66,3 +66,7 @@
         when: reboot_flag.stat.exists == true
     when: ansible_facts['os_family'] == 'Debian'
 #    when: ansible_facts['distribution'] == 'Linux Mint'
+
+
+
+# Reboot is required to fully utilize these updates.
