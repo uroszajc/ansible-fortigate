@@ -6,15 +6,16 @@
     backup_dir: "/home/net_control/backup"
   tasks:
     - name: Check for Update
-      ansible.builtin.shell: >-
-       sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/update/check-for-updates
+      routeros_command:
+       commands: 
+        - /system package update check-for-updates
       register: update_check
-      delegate_to: 192.168.83.89
+      
     - name: Check for version
-      ansible.builtin.shell: >-
-       sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/print
+      routeros_command:
+       commands:
+        - system/package/print
       register: pre_update_version
-      delegate_to: 192.168.83.89
     
     - name: Print result
       ansible.builtin.debug: 
