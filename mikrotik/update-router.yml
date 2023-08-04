@@ -29,7 +29,14 @@
       - name: Perform the update
         routeros_command:
          commands:
-          - system/package/print
+          - system package update install 
+
+      - name: Wait for device to come back online
+        wait_for:
+         host: "{{ inventory_hostname }}"
+         port: 22
+         delay: 600
+        delegate_to: home-pc
         
       - name: Check for version after update
         routeros_command:
