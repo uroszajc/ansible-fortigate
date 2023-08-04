@@ -2,17 +2,31 @@
 - name: start some containers
   hosts: hp
   tasks:
-  - name: Start Unifi container
+  - name: Ensure the containers are running
     community.docker.docker_container:
-     name: unifi-controller
+     name: "{{ item }}"
      state: started
-    
-  - name: Start heimdall container
-    community.docker.docker_container:
-     name: heimdall
-     state: started
-    
-  - name: Start watchtower container
-    community.docker.docker_container:
-     name: watchtower
-     state: started
+    loop:
+     - pihole
+     - heimdall
+     - watchtower
+     - unifi-controller
+     - syncthing
+     - portainer
+     - npm_db_1
+     - npm_app_1
+     - nextcloud_nextcloud_1
+     - nextcloud_mariadb_1
+     - bookstack_db
+    - bookstack
+     
+     
+     
+# - name: Add several users
+#   ansible.builtin.user:
+#     name: "{{ item }}"
+#     state: present
+#     groups: "wheel"
+#   loop:
+#      - testuser1
+#      - testuser2
