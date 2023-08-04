@@ -19,7 +19,7 @@
     
     - name: Print result
       ansible.builtin.debug: 
-       var: pre_update_version
+       var: update_check
        
     - name: Do the update stuff
       block:
