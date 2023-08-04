@@ -28,11 +28,11 @@
         ansible.builtin.shell: >-
          sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/update/check-for-updates
         
-      - name: Check for version
+      - name: Check for version after update
         ansible.builtin.shell: >-
          sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/package/print
         register: post_update_version
-      delegate_to: 192.168.83.89
+        delegate_to: 192.168.83.89
       
       - name: email results
         community.general.mail:
