@@ -5,15 +5,20 @@
   vars:
     backup_dir: "/home/net_control/backup"
   tasks:
-    - name: Check for version
+    - name: Check for Update
       ansible.builtin.shell: >-
        sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/update/check-for-updates
       register: update_check
       delegate_to: 192.168.83.89
+    - name: Check for version
+      ansible.builtin.shell: >-
+       sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/package/print
+      register: pre_update_version
+      delegate_to: 192.168.83.89
     
     - name: Print result
       ansible.builtin.debug: 
-       var: update_check
+       var: pre_update_version
     
     - block:
       - name: Run backup first
@@ -22,24 +27,21 @@
       - name: Pretend to update
         ansible.builtin.shell: >-
          sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/update/check-for-updates
-        register: post_update_check
         
+      - name: Check for version
+        ansible.builtin.shell: >-
+         sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }} system/package/package/print
+        register: post_update_version
+      delegate_to: 192.168.83.89
+      
       - name: email results
-        mail:
+        community.general.mail:
          host: 192.168.83.3
          port: 25
          to: uros@zajc.net
          from: uzajc@hotmail.com
          subject: Ansible Mikrotik update
-         body: |
-          This is an ansible email from {{ ansible_hostname }} to let you know the Mikrotik Router has been updated
-          Old version:
-          {{ update_check }}
-          
-          New Version
-          {{ post_update_check }}
-
-          Cheers bud
+         body: Mikrotik has been updated from {{ pre_update_version }} to {{post_update_version }} , backed up and restarted!
         delegate_to: home-pc
         
         when: '"New version is available" in update_check.stdout[0]'
