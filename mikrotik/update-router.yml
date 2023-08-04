@@ -42,4 +42,4 @@
           Cheers bud
         delegate_to: home-pc
         
-      when: '"New version is available" in update_check.stdout[0]'
+        when: '"New version is available" in update_check.stdout[0]'
