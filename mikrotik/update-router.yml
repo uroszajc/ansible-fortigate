@@ -19,7 +19,8 @@
     - name: Print result
       ansible.builtin.debug: 
        var: pre_update_version
-    
+       
+    - name: Do the update stuff
       block:
       - name: Run backup first
         import_tasks: mikrotik_backup.yml
