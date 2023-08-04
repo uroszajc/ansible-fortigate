@@ -1,5 +1,5 @@
 ---
-- name: Backup Mikrotik config
+- name: Upgrade Mikrotik
   hosts: mikrotik
   gather_facts: false
   tasks:
