@@ -2,6 +2,8 @@
 - name: Upgrade Mikrotik
   hosts: mikrotik
   gather_facts: false
+  vars:
+    backup_dir: "/home/net_control/backup"
   tasks:
     - name: Check for version
       ansible.builtin.shell: >-
