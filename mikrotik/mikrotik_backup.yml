@@ -1,6 +1,5 @@
 ---
-  vars:
-    backup_dir: "/home/net_control/backup"
+
   tasks:
     - name: Export
       ansible.builtin.shell: >-
