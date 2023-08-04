@@ -45,7 +45,9 @@
          subject: Ansible Mikrotik update
          body: Mikrotik has been updated from {{ pre_update_version }} to {{post_update_version }} , backed up and restarted!
         delegate_to: home-pc
-      when: '"status: New version is available" in update_check'  
-  
+      when: update_check is search("New version is available")
+
+#when: variable1 is search("value")
+#  when: "variable1.find('v=' ~ value) == -1"
       #when: update_check.stdout.find('New version is available') != -1  
      # when: '"New version is available" in update_check.stdout[0]'
