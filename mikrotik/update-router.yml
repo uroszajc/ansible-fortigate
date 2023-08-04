@@ -36,7 +36,7 @@
          host: "{{ inventory_hostname }}"
          port: 22
          delay: 600
-        delegate_to: home-pc
+        delegate_to: awx
         
       - name: Check for version after update
         routeros_command:
