@@ -18,7 +18,7 @@
      - nextcloud_nextcloud_1
      - nextcloud_mariadb_1
      - bookstack_db
-    - bookstack
+     - bookstack
      
      
      
