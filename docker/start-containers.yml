@@ -19,6 +19,9 @@
      - nextcloud_mariadb_1
      - bookstack_db
      - bookstack
+     - single-node_wazuh.indexer_1
+     - single-node_wazuh.manager_1
+     - single-node_wazuh.dashboard_1
      
      
      
