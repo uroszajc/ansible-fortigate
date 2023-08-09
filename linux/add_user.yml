@@ -1,6 +1,7 @@
-name: Ansible Create user play
+---
+- name: Ansible Create user play
   hosts: home-pc
-  tasks:
+   tasks:
     - name: Add the user 'svc.ansible' a primary group of 'sudo'
       ansible.builtin.user:
         name: svc.ansible
