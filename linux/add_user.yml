@@ -1,0 +1,13 @@
+name: Ansible Create user play
+  hosts: all
+  remote_user: ubuntu # Using Remote user as ubuntu
+  tasks:
+    - name: Add the user 'svc.ansible' a primary group of 'sudo'
+      ansible.builtin.user:
+        name: svc.ansible
+        comment: Ansible service account
+        group: sudo
+        createhome: yes        # Defaults to yes
+        home: /home/svc.ansible    # Defaults to /home/<username>
+        shell: /bin/bash
+        password: '$6$Udn/eZdG0MkFCRGC$f0dVc3HMHRjMwcDsSLAgAVj6FKIEYQkhUec9J3yeXvaDZtV37yaKeFe.HK6.7yrbp/aG5k3PPs7oFjYq.aBoL1'
