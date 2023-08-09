@@ -1,6 +1,5 @@
 name: Ansible Create user play
   hosts: home-pc
-  remote_user: ubuntu # Using Remote user as ubuntu
   tasks:
     - name: Add the user 'svc.ansible' a primary group of 'sudo'
       ansible.builtin.user:
