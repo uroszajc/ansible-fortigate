@@ -1,0 +1,99 @@
+---
+- name: Windows Updates Checker
+  hosts: all
+  tasks:
+    - name: "Find and Report Updates" 
+      win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+          - UpdateRollups
+          - DefinitionUpdates
+          - Application
+          - Tools
+          - Updates
+        state: searched
+      register: update_results 
+
+    - debug:
+        msg: |
+          {% for k in update_results.updates %}
+          {{ update_results.updates[k].title }}
+          {% endfor %}
+      when: update_result is defined
+
+    - name: Create updates file
+      file:
+        path: "email.txt"
+        state: touch
+      delegate_to: localhost 
+      when: update_result is defined
+
+    - name: Insert Style into email
+      lineinfile:
+        path: "email.txt"
+        line: |
+          <style>
+            #tower {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            #tower td, #tower th {
+              border: 1px solid #ddd;
+              padding: 8px;
+            }
+
+            #tower tr:nth-child(even){background-color: #f2f2f2;}
+
+            #tower th {
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: left;
+              background-color: #005EA1;
+              color: white;
+            }
+          </style>
+      run_once: true
+      delegate_to: localhost 
+      when: update_result is defined
+
+    - name: Insert update info into file
+      lineinfile: 
+        path: "email.txt"
+        line: |
+          <B>{{ ansible_hostname }} Updates<BR></b>
+          <table id="tower"><tr><th>KB</th><th>Title</td></tr>
+          {% for k in update_results.updates %}
+          <tr><Td>
+          {% if "Defender" in update_results.updates[k].title %}
+          <a href="https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes">{{ update_results.updates[k].kb | replace("['","") | replace("']","") }}</a></td>
+          {% else %}
+          <a href="https://support.microsoft.com/kb/{{ update_results.updates[k].kb | replace("['","") | replace("']","") }}">{{ update_results.updates[k].kb | replace("['","") | replace("']","") }}</a></td>f
+          {% endif %}
+          
+          <td>{{ update_results.updates[k].title }}</td></tr>
+          {% endfor %}
+          </table>
+          <B>Reboot Required : {{ update_results.reboot_required }}</b><BR><BR>
+
+        insertbefore: EOF
+      delegate_to: localhost 
+      when: update_result is defined
+
+    - name: Email the report
+      mail: 
+        from: awx@localhost
+        to: reporter@localhost
+        host: mailserver
+        port: 25
+        subject: Windows Updates
+        body: |
+          Hi,
+
+          Please see the attached available updates today
+          
+          {{ lookup('file', 'email.txt') }}
+      delegate_to: localhost       
+      when: update_result is defined
