@@ -64,7 +64,7 @@
         path: "email.txt"
         line: |
           <B>{{ ansible_hostname }} Updates<BR></b>
-          <table id="tower"><tr><th>KB</th><th>Title</td></tr>
+          <table id="AAP"><tr><th>KB</th><th>Title</td></tr>
           {% for k in update_results.updates %}
           <tr><Td>
           {% if "Defender" in update_results.updates[k].title %}
