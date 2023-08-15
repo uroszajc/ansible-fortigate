@@ -1,6 +1,6 @@
 ---
  - name: Check for linux Updates
-   hosts: all
+   hosts: servers
    tasks:
    - name: Ubuntu update block
      block:
