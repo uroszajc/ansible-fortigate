@@ -1,5 +1,5 @@
 ---
-- name: Check for linux Updates
+- name: Check for linux Updates and Generate HTML Report
   hosts: servers
   tasks:
     - name: Ubuntu update block
@@ -40,11 +40,10 @@
         - name: Run Python Script
           command: /tmp/convert_to_html.py
           register: ubuntu_script_output
+          changed_when: false
 
-        - name: Display Ubuntu Script Output
+        - name: Display Ubuntu HTML Content
           debug:
-            var: ubuntu_script_output.stdout_lines
+            var: ubuntu_script_output.stdout
 
       when: ansible_facts['os_family'] == 'Debian'
-
-    # ... (Red Hat Block similarly)
