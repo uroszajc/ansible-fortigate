@@ -1,0 +1,9 @@
+---
+ - name: Check for linux Updates
+   hosts: home-pc
+   tasks:
+   - name: List upates available
+     shell:
+      "apt list --upgradable"
+     register: ubuntu_updates
+   - debug: msg="{{ubuntu_updates }}"
