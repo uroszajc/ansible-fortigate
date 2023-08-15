@@ -1,9 +1,21 @@
 ---
  - name: Check for linux Updates
-   hosts: home-pc
+   hosts: all
    tasks:
-   - name: List upates available
-     shell:
-      "apt list --upgradable"
-     register: ubuntu_updates
-   - debug: msg="{{ubuntu_updates }}"
+   - name: Ubuntu update block
+     block:
+       - name: List Ubuntu update
+         shell:
+          "apt list --upgradable"
+         register: ubuntu_updates
+       - debug: msg="{{ubuntu_updates.stdout }}"
+     when: ansible_facts['os_family'] == 'Debian'
+
+   - name: Red Hat Block
+     block:
+       - name: List Redhat update
+         shell:
+          "yum  list --updates"
+         register: rhel_updates
+       - debug: msg="{{rhel_updates.stdout }}"
+     when: ansible_distribution_file_path == "/etc/redhat-release"
