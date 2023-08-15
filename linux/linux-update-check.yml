@@ -1,107 +1,50 @@
 ---
-- name: Ubuntu Update Report
-  hosts: all
-  collections:
-   - community.general
-
+- name: Check for linux Updates
+  hosts: servers
   tasks:
-    - name: Apt Cache Stuff
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-      become: yes
+    - name: Ubuntu update block
+      block:
+        - name: List Ubuntu update
+          shell:
+            "apt list --upgradable"
+          register: ubuntu_updates
 
-    - name: Check if there are available updates
-      shell: apt list --upgradable | tail -n +2 | column -t | awk '{print $1"\t"$2"\t"$6}' | column -t | tr -d ']' | column -J -n doupdate -N 'name,newversion,oldversion'
-      become: yes
-      register: update_result
+        - name: Copy Python Script
+          copy:
+            content: |
+              #!/usr/bin/env python3
+              import re
 
-    - name: Get Results
-      set_fact:
-        linuxupdates: "{{ update_result.stdout | from_json  }}"
-      when: update_result is defined
+              playbook_output = '''{{ ubuntu_updates.stdout | replace("\n", "\\n") }}'''
 
-    - debug:
-        msg: |
-          {{ linuxupdates }}
-      when: update_result is defined
+              lines = playbook_output.split('\\n')
 
-    - name: Create updates file
-      file:
-        path: "email.html"
-        state: touch
-      delegate_to: localhost 
-      when: update_result is defined
+              html_content = "<table><tr><th style='font-weight:bold;color:blue;'>Hostname</th><th style='font-weight:bold;color:blue;'>List of Updates</th></tr>"
 
-    - name: Insert Style into email
-      lineinfile:
-        path: "email.html"
-        line: |
-          <style>
-            #tower {
-              font-family: Arial, Helvetica, sans-serif;
-              border-collapse: collapse;
-              width: 100%;
-            }
+              for line in lines:
+                  if line.startswith("Listing..."):
+                      continue
 
-            #tower td, #tower th {
-              border: 1px solid #ddd;
-              padding: 8px;
-            }
+                  parts = re.split(r'\s+', line.strip(), maxsplit=1)
+                  hostname = parts[0]
+                  updates = parts[1] if len(parts) > 1 else ""
 
-            #tower tr:nth-child(even){background-color: #f2f2f2;}
+                  html_content += f"<tr><td>{hostname}</td><td>{updates}</td></tr>"
 
-            #tower th {
-              padding-top: 12px;
-              padding-bottom: 12px;
-              text-align: left;
-              background-color: #005EA1;
-              color: white;
-            }
-          </style>
-      run_once: true
-      delegate_to: localhost 
-      when: update_result is defined
-   
-    - name: Insert update info into file
-      lineinfile: 
-        path: "email.html"
-        line: |
-          <B>HostName: {{ ansible_hostname }} Updates<BR></b>
-          <table id="tower">
-          <tr>
-             <th>Title</th>
-             <th>Version</th>
-             <th>Upgrade Version<th>
-          </tr>
-          {% for k in linuxupdates.doupdate %}
-          <tr>
-            <td>{{ k.name }} </td>
-            <td>{{ k.oldversion }} </td>
-            <td>{{ k.newversion }} </td>
-          </tr>
-          {% endfor %}
-          </table>
-        insertbefore: EOF
-      delegate_to: localhost 
-      when: update_result is defined
-    - name: Display contents of HTML report
-      debug:
-        msg: |
-          HTML report contents:
-          {{ lookup('file', 'email.html') }}
-    # - name: Email the report
-    #   mail: 
-    #     from: awx@ingramfamily.id.au
-    #     to: grant@ingramfamily.id.au
-    #     host: 10.1.1.25
-    #     port: 25
-    #     subject: Linux Updates
-    #     subtype: html
-    #     body: |
-    #       Hi,
+              html_content += "</table>"
 
-    #       Please see the attached available updates today
-    #       {{ lookup('file', 'email.html') }}          
-    #   delegate_to: localhost       
-    #   when: update_result is defined
+              print(html_content)
+            dest: /tmp/convert_to_html.py
+            mode: '0755'
+
+        - name: Run Python Script
+          command: /tmp/convert_to_html.py
+          register: ubuntu_script_output
+
+        - name: Display Ubuntu Script Output
+          debug:
+            var: ubuntu_script_output.stdout_lines
+
+      when: ansible_facts['os_family'] == 'Debian'
+
+    # ... (Red Hat Block similarly)
