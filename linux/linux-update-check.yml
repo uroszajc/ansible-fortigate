@@ -1,0 +1,59 @@
+---
+ - name: Check for linux Updates
+   hosts: servers
+   tasks:
+   - name: Ubuntu update block
+     block:
+       - name: List Ubuntu update
+         shell:
+          "apt list --upgradable"
+         register: ubuntu_updates
+       - name: Copy Python Script
+         copy:
+           content: |
+             #!/usr/bin/env python3
+             import re
+
+             playbook_output = "{{ ubuntu_updates.stdout }}"
+
+             lines = playbook_output.split('\n')
+
+             html_content = "<table><tr><th style='font-weight:bold;color:blue;'>Hostname</th><th style='font-weight:bold;color:blue;'>List of Updates</th></tr>"
+
+             for line in lines:
+                 if line.startswith("Listing..."):
+                     continue
+
+                 parts = re.split(r'\s+', line.strip(), maxsplit=1)
+                 hostname = parts[0]
+                 updates = parts[1] if len(parts) > 1 else ""
+
+                 html_content += f"<tr><td>{hostname}</td><td>{updates}</td></tr>"
+
+             html_content += "</table>"
+
+             print(html_content)
+           dest: /tmp/convert_to_html.py
+           mode: '0755'
+
+       - name: Run Python Script
+         command: /tmp/convert_to_html.py
+         register: ubuntu_script_output
+
+       - name: Display Ubuntu Script Output
+         debug:
+           var: ubuntu_script_output.stdout_lines
+
+
+
+        
+     when: ansible_facts['os_family'] == 'Debian'
+
+   - name: Red Hat Block
+     block:
+       - name: List Redhat update
+         shell:
+          "yum  list --updates"
+         register: rhel_updates
+       - debug: msg="{{rhel_updates.stdout }}"
+     when: ansible_distribution_file_path == "/etc/redhat-release"
