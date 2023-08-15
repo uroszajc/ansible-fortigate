@@ -1,6 +1,6 @@
 ---
  - name: Check for linux Updates
-   hosts: servers
+   hosts: all
    tasks:
    - name: Ubuntu update block
      block:
@@ -14,7 +14,7 @@
              #!/usr/bin/env python3
              import re
 
-             playbook_output = "{{ ubuntu_updates.stdout }}"
+             playbook_output =  '''{{ ubuntu_updates.stdout | replace("\n", "\\n") }}'''
 
              lines = playbook_output.split('\n')
 
@@ -61,7 +61,7 @@
              #!/usr/bin/env python3
              import re
 
-             playbook_output = "{{ rhel_updates.stdout }}"
+             playbook_output =  '''{{ rhel_updates.stdout | replace("\n", "\\n") }}'''"
 
              lines = playbook_output.split('\n')
 
