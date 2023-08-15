@@ -85,19 +85,23 @@
         insertbefore: EOF
       delegate_to: localhost 
       when: update_result is defined
+    - name: Display contents of HTML report
+      debug:
+        msg: |
+          HTML report contents:
+          {{ lookup('file', 'email.html') }}
+    # - name: Email the report
+    #   mail: 
+    #     from: awx@ingramfamily.id.au
+    #     to: grant@ingramfamily.id.au
+    #     host: 10.1.1.25
+    #     port: 25
+    #     subject: Linux Updates
+    #     subtype: html
+    #     body: |
+    #       Hi,
 
-    - name: Email the report
-      mail: 
-        from: awx@ingramfamily.id.au
-        to: grant@ingramfamily.id.au
-        host: 10.1.1.25
-        port: 25
-        subject: Linux Updates
-        subtype: html
-        body: |
-          Hi,
-
-          Please see the attached available updates today
-          {{ lookup('file', 'email.html') }}          
-      delegate_to: localhost       
-      when: update_result is defined
+    #       Please see the attached available updates today
+    #       {{ lookup('file', 'email.html') }}          
+    #   delegate_to: localhost       
+    #   when: update_result is defined
