@@ -10,20 +10,38 @@
     - name: Convert to HTML Table
       set_fact:
         updates_html: |
-          <table>
-            <tr><th style='font-weight:bold;color:blue;'>Package</th><th style='font-weight:bold;color:blue;'>Version</th></tr>
-            {% for line in apt_list_output.stdout_lines %}
-              {% if line.startswith("Listing...") %}
-                <tr><td colspan="2">{{ line }}</td></tr>
-              {% else %}
-                <tr>
-                  <td>{{ line.split(' ')[0] }}</td>
-                  <td>{{ line.split(' ')[-1][1:-1] }}</td>
-                </tr>
-              {% endif %}
-            {% endfor %}
-          </table>
+          <html>
+            <head>
+              <style>
+                th {
+                  font-weight: bold;
+                  color: blue;
+                }
+              </style>
+            </head>
+            <body>
+              <h2>Updates for {{ ansible_hostname }}</h2>
+              <table>
+                <tr><th>Package</th><th>Version</th></tr>
+                {% for line in apt_list_output.stdout_lines %}
+                  {% if line.startswith("Listing...") %}
+                    <tr><td colspan="2">{{ line }}</td></tr>
+                  {% else %}
+                    <tr>
+                      <td>{{ line.split(' ')[0] }}</td>
+                      <td>{{ line.split(' ')[-1][1:-1] }}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+            </body>
+          </html>
 
-    - name: Display HTML Table
+    - name: Save HTML File
+      copy:
+        content: "{{ updates_html }}"
+        dest: /tmp/updates_report_{{ ansible_hostname }}.html
+
+    - name: Display HTML File Path
       debug:
-        var: updates_html
+        var: /tmp/updates_report_{{ ansible_hostname }}.html
