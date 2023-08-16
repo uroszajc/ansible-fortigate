@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: Run apt list command
-      shell: "apt list --upgradable"
+      shell: "apt list --upgradable| grep from"
       register: apt_list_output
 
     - name: Convert to HTML Table
