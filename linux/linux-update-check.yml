@@ -1,7 +1,7 @@
----
+\---
 - name: Convert Updates to HTML Table
-  hosts: home-pc
-  gather_facts: no
+  hosts: home-pc  # Replace 'localhost' with 'all' to run on all hosts
+  gather_facts: yes  # Gather facts for each host
   tasks:
     - name: Run apt list command
       shell: "apt list --upgradable| grep from"
@@ -40,8 +40,8 @@
     - name: Save HTML File
       copy:
         content: "{{ updates_html }}"
-        dest: /tmp/updates_report_{{ ansible_hostname }}.html
+        dest: "/tmp/updates_report_{{ ansible_hostname }}.html"
 
     - name: Display HTML File Path
       debug:
-        var: /tmp/updates_report_{{ ansible_hostname }}.html
+        var: "/tmp/updates_report_{{ ansible_hostname }}.html"
