@@ -1,6 +1,6 @@
 ---
 - name: Convert Updates to HTML Table
-  hosts: all  # Replace 'localhost' with 'all' to run on all hosts
+  hosts: home-pc  # Replace 'localhost' with 'all' to run on all hosts
   gather_facts: yes  # Gather facts for each host
   tasks:
     - name: Run apt list command
