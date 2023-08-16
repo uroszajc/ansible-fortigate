@@ -37,11 +37,11 @@
             </body>
           </html>
 
-    - name: Save HTML File
-      copy:
-        content: "{{ updates_html }}"
-        dest: "/tmp/updates_report_{{ ansible_hostname }}.html"
+    # - name: Save HTML File
+    #   copy:
+    #     content: "{{ updates_html }}"
+    #     dest: "/tmp/updates_report_{{ ansible_hostname }}.html"
 
     - name: Display HTML File Path
       debug:
-        var: "/tmp/updates_report_{{ ansible_hostname }}.html"
+        var: updates_html
