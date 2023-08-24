@@ -11,4 +11,4 @@
         createhome: yes        # Defaults to yes
         home: /home/svc.ansible    # Defaults to /home/<username>
         shell: /bin/bash
-        password: '$6$bFrb8xJCsl5Y/ZEn$.yTxIdP5MWnZcbz2wxVZOeKxHdv2f3rfbCYIWJFH2SjaexL2PxSyPXcTJsMed4d4zoaFjuSZTdOkNV2c98/Od0' # use mkpasswd --method=sha-512 to generate
+        password: 'Paste code here' # use mkpasswd --method=sha-512 to generate
